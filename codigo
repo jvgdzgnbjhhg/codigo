@@ -1,0 +1,137 @@
+#include<stdio.h>
+#define FILAS 23
+#define COL 90
+#include <stdlib.h>
+#include <time.h>
+
+char m[FILAS][COL];
+ void clear(char m[FILAS][COL])
+ {
+ 	int i,j;
+
+ 	for(i=0; i<FILAS;i++)
+	 	for (j=0; j<COL; j++)
+ 			m[i][j]=' ';
+
+ }
+ 
+void drawmap(char m[FILAS][COL]){
+	
+	
+	int i, f, c,x,y;
+	int p = FILAS*COL*0.30;
+	
+	for(i=0; i<p; i++){
+		f=rand()%FILAS;
+		c=rand()%COL;
+		if(m[f][c]==' ')
+			m[f][c]='l';
+		else
+			i--;
+	}
+	m[12][0]='@';
+}
+
+int posjugador(char m, int *x, int *y){
+	int i,j;
+	for(i=0; i<FILAS; i++){
+		for(j=0; j<COL; j++){
+			if (m[i][j]=='@'){
+			*x=i;
+			*y=j;
+			return 0;
+			}
+		}
+	}return 0;
+}
+
+void mover(char direccion, char m[FILAS][COL]) {
+  int fila = 0;
+  int columna = 0;
+  
+ 
+  for(int i = 0; i < 23; i++) {
+    for(int j = 0; j < 90; j++) {
+      if(m[i][j] == '@') {
+        fila = i;
+        columna = j;
+      }
+    }
+  }
+  
+  
+  switch(direccion) {
+    case 'w':
+      if(fila > 0 && m[fila-1][columna] != 'l') {
+        m[fila][columna] = ' ';
+        m[fila-1][columna] = '@';
+      }
+      break;
+    case 'a':
+      if(columna > 0 && m[fila][columna-1] != 'l') {
+        m[fila][columna] = ' ';
+        m[fila][columna-1] = '@';
+      }
+      break;
+    case 's':
+      if(fila < 23 && m[fila+1][columna] != 'l') {
+        m[fila][columna] = ' ';
+        m[fila+1][columna] = '@';
+      }
+      break;
+    case 'd':
+      if(columna < 90 && m[fila][columna+1] != 'l') {
+        m[fila][columna] = ' ';
+        m[fila][columna+1] = '@';
+      }
+      break;
+  }
+}
+
+void printtablero(char m[23][90]){
+ 	int i,j;
+ 	
+ 	for(i=0; i<FILAS;i++){
+ 		for (j=0; j<COL; j++){
+ 			printf ("%c", m[i][j]);
+		 }
+		 printf ("\n");
+	 }
+	 
+	 
+ }
+
+int demonio(char m){
+
+int fj, cj;
+
+int i, j=posjugador(m,&fj, &cj);
+
+while(1>0){
+	i=rand()%FILAS;
+	j=rand()%COL;
+	if(m[i][j]=='@' && m[i][j]=='l' && m[i][j]=='ñ')
+		i=j=0;
+	else break;
+	
+}
+	
+}
+int main()
+{
+	
+	char m[FILAS][COL];
+	srand(getpid());
+	clear(m);
+	drawmap(m);
+	printtablero(m);
+	
+	while (1){
+	system("cls");
+	printtablero(m);
+	char x=getch();
+	mover(x,m);
+	
+	}
+	
+}
